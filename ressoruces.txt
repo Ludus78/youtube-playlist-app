@@ -1,0 +1,7 @@
+Utilisé SUPABASE dans mon code : 
+Ensuite, dans tes fichiers .ts ou .vue, tu peux accéder à ces variables comme ceci :
+import { createClient } from '@supabase/supabase-js'
+
+const config = useRuntimeConfig()
+
+const supabase = createClient(config.public.supabaseUrl, config.public.supabaseKey)
