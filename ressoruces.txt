@@ -5,3 +5,13 @@ import { createClient } from '@supabase/supabase-js'
 const config = useRuntimeConfig()
 
 const supabase = createClient(config.public.supabaseUrl, config.public.supabaseKey)
+
+Utilisation dans les composants :
+Vous pouvez maintenant utiliser supabase dans vos composants comme suit :
+const { $supabase } = useNuxtApp()
+
+async function signInWithEmail(email, password) {
+  const { user, error } = await $supabase.auth.signIn({ email, password })
+  if (error) throw error
+  console.log('User logged in:', user)
+}
