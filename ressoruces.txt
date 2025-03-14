@@ -15,3 +15,62 @@ async function signInWithEmail(email, password) {
   if (error) throw error
   console.log('User logged in:', user)
 }
+
+clé API Youtube : 
+AIzaSyCMXxO7BYR0dXSPBG2gUhR_Vy0Isx-qM30
+
+Utilisé la clé API dans mon code :
+Dans un Composable (/composables)
+Les composables sont parfaits pour des fonctions réutilisables, surtout dans Nuxt 3.
+
+Créer le fichier du composable
+Crée un fichier dans le dossier /composables (si le dossier n'existe pas, crée-le) :
+/composables/useYouTube.js
+javascript
+Copier
+Modifier
+export const useYouTube = () => {
+  const searchYouTube = async (query) => {
+    const apiKey = process.env.NUXT_PUBLIC_YOUTUBE_API_KEY;
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(query)}&key=${apiKey}&maxResults=5`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Erreur lors de la requête API YouTube:', error);
+    }
+  };
+
+  return { searchYouTube };
+};
+Utiliser le composable dans un composant
+Par exemple, dans un composant Vue /pages/index.vue :
+vue
+Copier
+Modifier
+<template>
+  <div>
+    <input v-model="query" placeholder="Rechercher une vidéo YouTube" @keyup.enter="handleSearch" />
+    <ul>
+      <li v-for="video in videos" :key="video.id.videoId">
+        {{ video.snippet.title }}
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { useYouTube } from '~/composables/useYouTube';
+
+const { searchYouTube } = useYouTube();
+const query = ref('');
+const videos = ref([]);
+
+const handleSearch = async () => {
+  const result = await searchYouTube(query.value);
+  videos.value = result.items;
+};
+</script>
