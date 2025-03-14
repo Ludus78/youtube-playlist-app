@@ -16,8 +16,6 @@ async function signInWithEmail(email, password) {
   console.log('User logged in:', user)
 }
 
-clé API Youtube : 
-AIzaSyCMXxO7BYR0dXSPBG2gUhR_Vy0Isx-qM30
 
 Utilisé la clé API dans mon code :
 Dans un Composable (/composables)
